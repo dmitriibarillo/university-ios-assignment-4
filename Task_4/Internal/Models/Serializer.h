@@ -2,6 +2,6 @@
 
 @interface Serializer : NSObject
 
-- (NSString *)serialize:(id)dictionary withError:(NSError *__autoreleasing*)error;
++ (NSString *)serialize:(id)dictionary withError:(NSError *__autoreleasing*)error;
 
 @end

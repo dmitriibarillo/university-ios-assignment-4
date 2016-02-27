@@ -6,9 +6,11 @@
 
 @implementation Serializer
 
-- (NSString *)serialize:(id)dictionary withError:(NSError *__autoreleasing *)error
++ (NSString *)serialize:(id)dictionary withError:(NSError *__autoreleasing *)error
 {
-    NSMutableString *result = [[NSMutableString alloc] init];
+    //Serializer *serializer = [[Serializer alloc] init];
+    
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@""];
     if ([dictionary isKindOfClass:[NSDictionary class]]) {
         [result appendString:[self serializeObject:dictionary]];
     }
@@ -19,27 +21,27 @@
     return [result copy];
 }
 
-- (NSString *)serializeObject:(id)object
++ (NSString *)serializeObject:(id)object
 {
     NSMutableString *result = [[NSMutableString alloc] init];
     
     if ([object isKindOfClass:[NSDictionary class]]) {
-        [self serializeNSDictionary:object];
+        result = [self serializeNSDictionary:object];
     }
     else if ([object isKindOfClass:[NSArray class]]) {
-        [self serializeNSArray:object];
+        result = [self serializeNSArray:object];
     }
     else if ([object isKindOfClass:[NSSet class]]) {
-        [self serializeNSSet:object];
+        result = [self serializeNSSet:object];
     }
     else if ([object isKindOfClass:[NSNumber class]]) {
-        [self serializeNSNumber:object];
+        result = [self serializeNSNumber:object];
     }
     else if ([object isKindOfClass:[NSValue class]]) {
-        [self serializeCGRect:object];
+        result = [self serializeCGRect:object];
     }
     else if ([object isKindOfClass:[NSNull class]]) {
-        [self serializeNSNull];
+        result = [self serializeNSNull];
     }
     else {
         NSLog(@"ERROR serializeObject\n");
@@ -48,7 +50,7 @@
     return [result copy];
 }
 
-- (NSString *)serializeNSDictionary:(NSDictionary *)dictionary
++ (NSString *)serializeNSDictionary:(NSDictionary *)dictionary
 {
     NSMutableString *result = [[NSMutableString alloc] init];
     [result appendString:@"{"];
@@ -65,7 +67,7 @@
     return [result copy];
 }
 
-- (NSString *)serializeNSArray:(NSArray  *)array
++ (NSString *)serializeNSArray:(NSArray  *)array
 {
     NSMutableString *arrayString = [[NSMutableString alloc] init];
     [arrayString appendString:@"["];
@@ -84,30 +86,27 @@
     return [arrayString copy];
 }
 
-- (NSString *)serializeNSSet:(NSSet *)set
++ (NSString *)serializeNSSet:(NSSet *)set
 {
     NSArray *array = [set allObjects];
     return [array copy];
 }
 
-- (NSString *)serializeNSNumber:(NSNumber *)number
++ (NSString *)serializeNSNumber:(NSNumber *)number
 {
-    NSString *numberString = [NSString stringWithFormat:@"%@", number];
-    return numberString;
+    return [number stringValue];
 }
 
-- (NSString *)serializeNSNull
++ (NSString *)serializeNSNull
 {
     return @"null";
 }
 
-
-- (NSString *)serializeCGRect:(NSValue *)number
++ (NSString *)serializeCGRect:(NSValue *)number
 {
     NSMutableString *result = [[NSMutableString alloc] init];
     // TODO
     return [result copy];
 }
-
 
 @end
