@@ -53,8 +53,6 @@
     NSString *serializedDictionary = [Serializer serialize:testDictionary withError:&error];
     
     NSLog(@"%@", serializedDictionary);
-
-    
 }
 
 - (void)didReceiveMemoryWarning {
