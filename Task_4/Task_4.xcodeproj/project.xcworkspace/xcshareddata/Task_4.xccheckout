@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>2D8739D7-CB25-49D8-A892-26C1C53B4C0E</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Task_4</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>E7F44C4433FB7C94B320AAAB8F9D16B9D5F11109</key>
 		<string>https://github.com/dmitriibarillo/university-ios-assignment-4.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Task_4/Task_4.xcodeproj/project.xcworkspace</string>
+	<string>Task_4/Task_4.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E7F44C4433FB7C94B320AAAB8F9D16B9D5F11109</key>
