@@ -71,6 +71,10 @@ typedef NS_ENUM(NSInteger, ERROR_TYPE) {
         return nil;
     }
     
+    if (*error != nil) {
+        return nil;
+    }
+    
     return [result copy];
 }
 
