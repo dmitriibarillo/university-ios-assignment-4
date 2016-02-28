@@ -1,6 +1,5 @@
 #import "Serializer.h"
 
-
 static NSString *const kSerializerErrorDomain = @"Serialize.domain";
 
 typedef NS_ENUM(NSInteger, ERROR_TYPE) {
@@ -20,16 +19,19 @@ typedef NS_ENUM(NSInteger, ERROR_TYPE) {
 {
     NSString *result = [[NSString alloc] init];
     int initDeep = 0;
-    if (error == nil) {
-        return nil;
-    }
+    
     if ([dictionary isKindOfClass:[NSDictionary class]]) {
-        result = [self serializeObject:dictionary deep:initDeep error:error];
+        if (error != nil)
+            result = [self serializeObject:dictionary deep:initDeep error:error];
+        else{
+            NSError *error2 = nil;
+            result = [self serializeObject:dictionary deep:initDeep error:&error2];
+        }
     }
     else {
         if (error) {
             NSString *errorMessage = [NSString stringWithFormat:@"Expected NSDictionary. %@ was received.", [dictionary class]];
-            NSDictionary *userInfo = @{NSLocalizedDescriptionKey:NSLocalizedString(errorMessage, nil)};
+            NSDictionary *userInfo = @{NSLocalizedDescriptionKey:errorMessage};
             *error = [NSError errorWithDomain:kSerializerErrorDomain code:SerializerErrorTypeNotADictionary userInfo:userInfo];
         }
         
@@ -67,7 +69,7 @@ typedef NS_ENUM(NSInteger, ERROR_TYPE) {
     else {
         if (error) {
             NSString *errorMessage = [NSString stringWithFormat:@"Unknown object. %@ was received.", [object class]];
-            NSDictionary *userInfo = @{NSLocalizedDescriptionKey:NSLocalizedString(errorMessage, nil)};
+            NSDictionary *userInfo = @{NSLocalizedDescriptionKey:errorMessage};
             *error = [NSError errorWithDomain:kSerializerErrorDomain code:SerializerErrorTypeInvalidObjectType userInfo:userInfo];
         }
         
@@ -96,7 +98,7 @@ typedef NS_ENUM(NSInteger, ERROR_TYPE) {
             if (![key isKindOfClass:[NSString class]]) {
                 if (error) {
                     NSString *errorMessage = [NSString stringWithFormat:@"Key have invalid type: %@.", [key class]];
-                    NSDictionary *userInfo = @{NSLocalizedDescriptionKey:NSLocalizedString(errorMessage, nil)};
+                    NSDictionary *userInfo = @{NSLocalizedDescriptionKey:errorMessage};
                     *error = [NSError errorWithDomain:kSerializerErrorDomain code:SerializerErrorTypeInvalidObjectType userInfo:userInfo];
                 }
                 
@@ -201,7 +203,7 @@ typedef NS_ENUM(NSInteger, ERROR_TYPE) {
     else {
         if (error) {
             NSString *errorMessage = [NSString stringWithFormat:@"Expected CGRect. %@ was received.", [value class]];
-            NSDictionary *userInfo = @{NSLocalizedDescriptionKey:NSLocalizedString(errorMessage, nil)};
+            NSDictionary *userInfo = @{NSLocalizedDescriptionKey:errorMessage};
             *error = [NSError errorWithDomain:kSerializerErrorDomain code:SerializerErrorTypeInvalidNSValueType userInfo:userInfo];
         }
         return nil;
