@@ -27,7 +27,7 @@
                          ];
     
     NSLog(@"Case 1: Positive.");
-    NSError *__autoreleasing error = nil;
+    NSError *error = nil;
     NSDictionary *testDictionary = @{
         @"_id": @"5680919d930653b61fb96bcf",
         @"index": @0,
@@ -71,7 +71,7 @@
     NSLog(@"Case 3: ERROR INVALID_NSVALUE_TYPE");
     NSTimeInterval interval = 500;
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:interval];
-    NSError *__autoreleasing error3 = nil;
+    NSError *error3 = nil;
     NSDictionary *testDictionary3 = @{@"CGRect": date};
     NSString *serializedDictionary3 = [Serializer serialize:testDictionary3 withError:&error3];
     
@@ -85,7 +85,7 @@
     
     NSLog(@"Case 5: ERROR INVALID_NSVALUE_TYPE");
     CGSize size = CGSizeMake(5, 10);
-    NSError *__autoreleasing error5 = nil;
+    NSError *error5 = nil;
     NSDictionary *testDictionary5 = @{@"CGRect": [NSValue valueWithCGSize:size]};
     NSString *serializedDictionary5 = [Serializer serialize:testDictionary5 withError:&error5];
     
